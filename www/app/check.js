@@ -62,12 +62,14 @@ Browser = {
 			case 'windows phone':
 				ret = 'Windows Phone';
 				break;
-			//$.browser no reconoce la plataforma firefox.
-			/*
-			case 'firefox':
-				ret = 'FirefoxOS';
+			
+			//Firefox OS platform is empty
+			case '':
+				if ($.browser.mozilla){
+					ret = 'Firefox OS';
+				}
 				break;
-			*/
+
 			case 'win':
 				ret = 'Windows';
 				break;
@@ -126,10 +128,28 @@ Browser = {
 				break;
 
 			case '':
-				//platform en firefox os muestra vacío
-				if ($.browser.mozilla){
-					ret = 'Firefox OS';
-				}
+				var ffVersionArray = (navigator.userAgent.match(/Firefox\/([\d]+\.[\w]?\.?[\w]+)/));
+         		if (ffVersionArray.length === 2) {
+					//Check with the gecko version the Firefox OS version
+					//Table https://developer.mozilla.org/en-US/docs/Gecko_user_agent_string_reference
+					var hashVersion = {
+						'18.0': '1.0.1',
+						'18.1': '1.1',
+						'26.0': '1.2',
+						'28.0': '1.3',
+						'30.0': '1.4',
+						'32.0': '2.0',
+						'34.0': '2.1',
+						'37.0': '2.2',
+						'41.0': '3.0',
+					}
+					var rver = ffVersionArray[1];
+					var sStr = ffVersionArray[1].substring(0, 4);
+					if (hashVersion[sStr]) {
+						rver = hashVersion[sStr];
+					}
+					ret = rver;
+         		}
 				break;
 
 			default:
@@ -409,8 +429,8 @@ Browser = {
 
 		//Device
 		ret += sep;
-		ret += nl + "platform: " + this._platformName();
-		ret += nl + "version: " +  this._platformVersion();
+		ret += nl + "Platform name: " + this._platformName();
+		ret += nl + "Platform version: " +  this._platformVersion();
 		ret += nl + "is Mobile Device: " +  this._isMobileDevice();
 		ret += nl + "Screen Size: " +  this._screenSize();
 		ret += nl + "Screen Density: " +  this._ratioToDensity();
@@ -418,8 +438,8 @@ Browser = {
 
 		//Browser
 		ret += sep;
-		ret += nl + "platform: " + this._browserName();
-		ret += nl + "version: " +  this._browserVersion();
+		ret += nl + "Browser name: " + this._browserName();
+		ret += nl + "Browser version: " +  this._browserVersion();
 		ret += sep;
 
 		//Advanced inputs

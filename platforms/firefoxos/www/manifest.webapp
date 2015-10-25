@@ -1,0 +1,14 @@
+{
+    "launch_path": "/app/index.html",
+    "installs_allowed_from": [
+        "*"
+    ],
+    "version": "0.0.1",
+    "name": "browser-checks",
+    "description": "Test browser compatibility with specific features.",
+    "developer": {
+        "name": "Arualys",
+        "url": "http://cordova.io"
+    },
+    "icons": {}
+}
