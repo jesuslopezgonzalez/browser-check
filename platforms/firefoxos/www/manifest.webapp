@@ -1,5 +1,5 @@
 {
-    "launch_path": "/app/index.html",
+    "launch_path": "/index.html",
     "installs_allowed_from": [
         "*"
     ],
